@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { emailValidator } from "../Validators/emailValidator";
+import { passwordValidator } from "../Validators/passwordValidator";
 
 const LoginForm = () => {
   const {
@@ -13,18 +15,18 @@ const LoginForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit(formSubmitted)}>
-        <input type="text" placeholder="unesite vase ime"></input>
         <input
-          {...register("password", {
-            required: true,
-            validate: {
-              trimCheck: (value) => value.trim() !== "",
-            },
-          })}
+          {...register("email", emailValidator)}
+          type="text"
+          placeholder="unesite email"
+        ></input>
+        <input
+          {...register("password", passwordValidator)}
           type="password"
           placeholder="unesite vasu lozinku"
         ></input>
-        {errors.password && <p>This field is required</p>}
+        {errors.password && <p>{errors.password.message}</p>}
+        {errors.email && <p>{errors.email.message}</p>}
         <button>Login</button>
       </form>
     </>
